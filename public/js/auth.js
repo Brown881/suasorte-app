@@ -34,6 +34,6 @@ async function login() {
         }
     } catch (error) {
         console.error("Erro ao conectar ao servidor:", error); // Log para depuração
-        errorMessage.textContent = "Erro ao conectar ao servidor.";
+        errorMessage.textContent = "E-mail ou senha incorretos.";
     }
 }

@@ -1,7 +1,7 @@
 // Verifica o plano do usuário ao carregar a página
 const userPlan = localStorage.getItem('userPlan');
 if (!userPlan) {
-    window.location.href = "login.html"; // Redireciona para o login se não estiver autenticado
+    window.location.href = "public/login.html"; // Redireciona para o login se não estiver autenticado
 }
 
 // Atualiza as opções com base no plano do usuário
