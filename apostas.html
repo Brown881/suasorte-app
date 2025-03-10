@@ -373,10 +373,7 @@
 
         // Exibe os containers de resultados
         resultContainer.style.display = 'flex';
-
-        // Rola a página para exibir os resultados, alinhando ao topo
-        resultContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
+        
         // Atualiza a contagem de gerações e a data da última geração
         if (lastGenerationDate !== new Date().toDateString()) {
             localStorage.setItem(`lastGenerationDate_${currentGame}`, new Date().toDateString());
