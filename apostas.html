@@ -195,7 +195,7 @@
     </style>
 </head>
 <body>
-
+    
 <div class="container">
     <!-- Ícone de logout -->
     <div class="logout-icon" onclick="logout()">
@@ -238,11 +238,33 @@
     <button class="acquire" onclick="acquirePackage()">EU QUERO</button>
 </div>
 
+<!-- Popup de limite de gerações -->
+<div class="overlay" id="overlayLimit"></div>
+<div class="popup" id="popupLimit">
+    <p>São permitidas somente gerar apostas 2 vezes por dia, para que o sistema seja mais eficiente e acertivo! Volte amanhã para gerar novas apostas.</p>
+    <button class="close" onclick="closeLimitPopup()">VOLTAR</button>
+</div>
+
+<!-- Popup informativo inicial -->
+<div class="overlay" id="overlayInfo"></div>
+<div class="popup" id="popupInfo">
+    <p>É permitido gerar apostas 2 vezes por dia, para que o sistema seja mais eficiente e acertivo!</p>
+    <button class="close" onclick="closeInfoPopup()">CONTINUAR</button>
+</div>
+
 <script>
     // Verifica o plano do usuário ao carregar a página
     const userPlan = localStorage.getItem('userPlan');
     if (!userPlan) {
         window.location.href = "login.html"; // Redireciona para o login se não estiver autenticado
+    }
+
+    // Verifica se é a primeira vez que o usuário entra no sistema e exibe o popup informativo
+    const lastInfoPopup = localStorage.getItem('lastInfoPopup');
+    if (!lastInfoPopup || lastInfoPopup !== new Date().toDateString()) {
+        document.getElementById('overlayInfo').style.display = 'block';
+        document.getElementById('popupInfo').style.display = 'block';
+        localStorage.setItem('lastInfoPopup', new Date().toDateString());
     }
 
     let currentGame = "lotofacil"; // Jogo atual (inicia com LOTOFÁCIL)
@@ -294,6 +316,16 @@
 
     // Função para gerar números aleatórios
     function generateNumbers() {
+        const lastGenerationDate = localStorage.getItem('lastGenerationDate');
+        const generationCount = parseInt(localStorage.getItem('generationCount') || 0);
+
+        // Verifica se o usuário já gerou apostas 2 vezes hoje
+        if (lastGenerationDate === new Date().toDateString() && generationCount >= 2) {
+            document.getElementById('overlayLimit').style.display = 'block';
+            document.getElementById('popupLimit').style.display = 'block';
+            return;
+        }
+
         const numberCount = parseInt(document.getElementById('numberCount').value);
         const resultIds = ["result1", "result2", "result3", "result4", "result5"];
         const resultContainer = document.getElementById('resultContainer');
@@ -341,7 +373,15 @@
         resultContainer.style.display = 'flex';
 
         // Rola a página para exibir os resultados
-        // resultContainer.scrollIntoView({ behavior: 'smooth' });
+        resultContainer.scrollIntoView({ behavior: 'smooth' });
+
+        // Atualiza a contagem de gerações e a data da última geração
+        if (lastGenerationDate !== new Date().toDateString()) {
+            localStorage.setItem('lastGenerationDate', new Date().toDateString());
+            localStorage.setItem('generationCount', 1);
+        } else {
+            localStorage.setItem('generationCount', generationCount + 1);
+        }
     }
 
     // Função para exibir o popup
@@ -354,6 +394,18 @@
     function closePopup() {
         document.getElementById('overlay').style.display = 'none';
         document.getElementById('popup').style.display = 'none';
+    }
+
+    // Função para fechar o popup de limite de gerações
+    function closeLimitPopup() {
+        document.getElementById('overlayLimit').style.display = 'none';
+        document.getElementById('popupLimit').style.display = 'none';
+    }
+
+    // Função para fechar o popup informativo inicial
+    function closeInfoPopup() {
+        document.getElementById('overlayInfo').style.display = 'none';
+        document.getElementById('popupInfo').style.display = 'none';
     }
 
     // Função para redirecionar ao adquirir o pacote
