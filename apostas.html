@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LOTOFÁCIL</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,6 +25,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 600px;
+            position: relative; /* Para posicionar o ícone de logout */
         }
         h1 {
             background-color: #993399; /* Cor padrão (roxo) */
@@ -122,14 +124,15 @@
             background-color: #FF9800; /* Laranjado */
         }
         .locked {
-            pointer-events: none;
-            opacity: 0.7;
+            opacity: 0.5; /* Opacidade reduzida para indicar bloqueio */
+            position: relative;
         }
         .locked::after {
-            content: "🔒";
+            content: "🔒"; /* Ícone de cadeado */
             position: absolute;
             top: -10px;
-            right: -10px;
+            left: 95%;
+            transform: translateX(-50%);
             font-size: 20px;
             background-color: rgba(255, 255, 255, 0.8);
             border-radius: 50%;
@@ -178,22 +181,27 @@
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 999;
         }
-
-        /* Estilos para telas pequenas */
-        @media (max-width: 600px) {
-            .game-box {
-                flex: 1 1 100%;
-                margin: 5px 0;
-            }
-            .result-container {
-                gap: 10px;
-            }
+        .logout-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px; /* Tamanho do ícone */
+            cursor: pointer;
+            color: #993399; /* Cor do ícone */
+        }
+        .logout-icon:hover {
+            opacity: 0.8;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
+    <!-- Ícone de logout -->
+    <div class="logout-icon" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+    </div>
+
     <h1 id="titulo">LOTOFÁCIL</h1>
     <div class="subtitle">
         Serão geradas 5 apostas diferentes para maior probabilidade de acerto. Recomendamos fazer no mínimo 3 apostas e no máximo 5 por vez.
@@ -351,6 +359,12 @@
     // Função para redirecionar ao adquirir o pacote
     function acquirePackage() {
         window.location.href = "https://www.google.com"; // Redireciona para o Google (simulação)
+    }
+
+    // Função para fazer logout
+    function logout() {
+        localStorage.removeItem('userPlan'); // Remove o plano do usuário
+        window.location.href = "login.html"; // Redireciona para a tela de login
     }
 
     // Adicionando interação aos containers clicáveis
