@@ -344,7 +344,7 @@
         const generationCount = parseInt(localStorage.getItem(generationKey) || 0);
 
         // Verifica se o usuário já gerou apostas 2 vezes hoje
-        if (lastGenerationDate === new Date().toDateString() && generationCount >= 20) {
+        if (lastGenerationDate === new Date().toDateString() && generationCount >= 200) {
             document.getElementById('overlayLimit').style.display = 'block';
             document.getElementById('popupLimit').style.display = 'block';
             return;
