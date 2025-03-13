@@ -5,13 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SORTE FÁCIL</title>
     <link rel="stylesheet" href="public/css/styles.css">
+    <style>
+        /* Estilos gerais */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #993399; /* Fundo roxo */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            text-align: center;
+            max-width: 400px;
+            width: 90%; /* Torna o container responsivo */
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .trevo-img {
+            width: 100px; /* Tamanho da imagem do trevo */
+            height: auto;
+            display: block;
+            margin: 0 auto 20px; /* Centraliza a imagem e adiciona margem abaixo */
+        }
+
+        h1 {
+            color: #993399; /* Cor roxa para combinar com o tema */
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%; /* Largura dos inputs (100% do container) */
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box; /* Garante que o padding não aumente a largura */
+        }
+
+        button {
+            width: 100%; /* Largura do botão (100% do container) */
+            padding: 10px;
+            background-color: #993399; /* Cor roxa */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 15px; /* Espaçamento abaixo do botão */
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
     <div class="login-container">
+        <!-- Imagem do trevo da Lotofácil -->
+        <img src="public/imagens/lotofacil.png" alt="Trevo da Lotofácil" class="trevo-img">
+
+        <!-- Título -->
         <h1>SORTE FÁCIL</h1>
+
+        <!-- Campos de entrada -->
         <input type="email" id="email" placeholder="Email" required>
         <input type="password" id="password" placeholder="Senha" required>
+
+        <!-- Botão de entrar -->
         <button onclick="login()">Entrar</button>
+
+        <!-- Mensagem de erro -->
         <div class="error-message" id="errorMessage"></div>
     </div>
 
