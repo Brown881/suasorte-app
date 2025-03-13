@@ -74,7 +74,7 @@
             padding: 15px;
             border: 1px solid #ddd;
             border-radius: 8px;
-            background-color: #f9f9f9;
+            background-color: #fff; /* Fundo branco */
         }
         .number {
             display: inline-block;
@@ -83,14 +83,118 @@
             line-height: 40px;
             margin: 5px;
             background-color: #d6dee2; /* Cor padrão (cinza) */
-            color: #993399; /* Cor padrão (roxo) */
+            color: #ffffff; /* Cor padrão (roxo) */
             font-weight: bold;
             border-radius: 50%;
             text-align: center;
-            border: 2px solid black; /* Borda preta */
+            border: 2px solid rgb(78, 65, 65); /* Borda preta */
+        }
+        .game-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .game-box {
+            flex: 1;
+            padding: 15px;
+            min-width: 100px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: bold;
+            color: white;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+        .game-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .lotofacil {
+            background-color: #993399; /* Roxo */
+        }
+        .megasena {
+            background-color: #4CAF50; /* Verde */
+        }
+        .quina {
+            background-color: #003366; /* Azul marinho */
+        }
+        .lotomania {
+            background-color: #FF9800; /* Laranjado */
+        }
+        .locked {
+            opacity: 0.5; /* Opacidade reduzida para indicar bloqueio */
+            position: relative;
+        }
+        .locked::after {
+            content: "🔒"; /* Ícone de cadeado */
+            position: absolute;
+            top: -10px;
+            left: 95%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            padding: 5px;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            text-align: center;
+        }
+        .popup p {
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        .popup button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .popup button.close {
+            background-color: #ccc;
+            color: #333;
+        }
+        .popup button.acquire {
+            background-color: #993399;
+            color: white;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        .logout-icon {
+            position: absolute;
+            top: 55px;
+            right: 25px;
+            font-size: 24px; /* Tamanho do ícone */
+            cursor: pointer;
+            color: #ffffff; /* Cor do ícone */
+        }
+        .logout-icon:hover {
+            opacity: 0.8;
         }
 
-        /* Cores das bolas por jogo */
+        /* Cores das bolas e números por jogo */
         .lotofacil .number {
             background-color: #993399; /* Roxo */
             color: white; /* Número branco */
@@ -240,7 +344,7 @@
         const generationCount = parseInt(localStorage.getItem(generationKey) || 0);
 
         // Verifica se o usuário já gerou apostas 2 vezes hoje
-        if (lastGenerationDate === new Date().toDateString() && generationCount >= 2) {
+        if (lastGenerationDate === new Date().toDateString() && generationCount >= 200) {
             document.getElementById('overlayLimit').style.display = 'block';
             document.getElementById('popupLimit').style.display = 'block';
             return;
@@ -281,10 +385,10 @@
 
             // Exibe os números gerados no container correspondente
             const resultDiv = document.getElementById(resultIds[i]);
-            resultDiv.className = `result ${currentGame}`; // Adiciona a classe do jogo atual
+            resultDiv.className = `result`; // Remove a classe do jogo anterior
             numbers.forEach(num => {
                 const numberElement = document.createElement('div');
-                numberElement.className = 'number';
+                numberElement.className = `number ${currentGame}`; // Adiciona a classe do jogo atual ao número
                 numberElement.innerText = num < 10 ? `0${num}` : num; // Formata números com 2 dígitos
                 resultDiv.appendChild(numberElement);
             });
